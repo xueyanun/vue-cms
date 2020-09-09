@@ -12,10 +12,10 @@
         <!-- 9宫格改6宫格 -->
         <ul class="mui-table-view mui-grid-view mui-grid-9">
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                <a href="#">
+                <router-link to='/home/newsList'>
                     <img src="/src/images/icon1.png" />
                     <div class="mui-media-body">新闻资讯</div>
-                </a>
+                </router-link>
             </li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
                 <a href="#">
@@ -63,7 +63,7 @@ export default {
     },
     methods: {
         getLunbotu(){
-            this.$http.get("http://api.cms.liulongbin.top/api/getlunbo").then(result=>{
+            this.$http.get("api/getlunbo").then(result=>{
                 // console.log(result.body)
                 if(result.body.status===0){
                     //数据请求成功

@@ -2,7 +2,7 @@
    <div class='app-container'>
        <mt-header fixed title="固定在顶部的header"></mt-header>
 	   <transition>
-			<router-view style='margin-top:40px;'></router-view>
+			<router-view style='margin-top:40px;margin-bottom:50px;'></router-view>
 	   </transition>
        <nav class="mui-bar mui-bar-tab">	   
 			<router-link id="defaultTab" class="mui-tab-item" :to='{name:"home"}'>
