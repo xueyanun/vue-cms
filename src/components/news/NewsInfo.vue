@@ -1,13 +1,13 @@
 <template>
     <div class='newsInfo_container'>
-        <h3 class='title'> newsTitile</h3>
+        <h3 class='title'> {{newsInfo.title}}</h3>
         <p class='sub_title'>
-            <span>发布时间：2020-09-07 16:11</span>
-            <span>点击：8次</span>
+            <span>发布时间：{{newsInfo.add_time|dataFormat}}</span>
+            <span>点击：{{newsInfo.click}}次</span>
         </p>
         <hr/>
-        <div class='content'>
-            {{newsInfo}}
+        <div class='content' v-html="newsInfo.content">
+            
         </div>
         <comment-box :id="id"></comment-box>
     </div>
@@ -24,9 +24,9 @@ export default {
     },
     methods:{
         getNewsInfo(){
-            this.$http.get("api/getnew/:"+this.id).then(function(result) {
-                if(result.body.status===1){
-                    this.newsInfo=result.body.message;
+            this.$http.get("api/getnew/"+this.id).then(function(result) {
+                if(result.body.status===0){
+                    this.newsInfo=result.body.message[0];
                 }else{
                     //数据请求失败
                     Toast('加载新闻数据失败。。。');
