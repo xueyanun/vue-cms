@@ -1,14 +1,7 @@
 <template>
     <div>
         <!-- 轮播图区 -->
-        <mt-swipe :auto="4000">
-        <!-- <mt-swipe-item>1</mt-swipe-item>
-        <mt-swipe-item>2</mt-swipe-item>
-        <mt-swipe-item>3</mt-swipe-item> -->
-        <mt-swipe-item v-for="item in lunbotuList" :key="item.img">
-            <img :src="item.img"/>
-        </mt-swipe-item>
-        </mt-swipe>
+        <swiper :lunbotuList="lunbotuList" :isfull="isfull"></swiper>
         <!-- 9宫格改6宫格 -->
         <ul class="mui-table-view mui-grid-view mui-grid-9">
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
@@ -52,10 +45,12 @@
 </template>
 <script>
 import {Toast} from 'mint-ui';
+import swiper from "../news/subcomponents/swiper.vue"
 export default {
     data(){
         return{
-            lunbotuList:[]
+            lunbotuList:[],
+            isfull:true
         }
     },
     created(){
@@ -76,6 +71,9 @@ export default {
             })
         }
     },
+    components:{
+        swiper
+    }
 }
 </script>
 <style lang="less" scoped>
@@ -88,25 +86,9 @@ export default {
             font-size: 13px;
         }
     }
-    .mint-swipe{
-        height:200px;
-        .mint-swipe-item{
-            &:nth-child(1){
-                background-color: pink;
-            }
-            &:nth-child(2){
-                background-color: paleturquoise;
-            }
-            &:nth-child(3){
-                background-color: peachpuff;
-            }
-            img{
-                width:100%;
-                height:100%;
-            }
-        }
-    }
+
     .mui-grid-view.mui-grid-9 .mui-table-view-cell{
         border:none;
     }
+   
 </style>
