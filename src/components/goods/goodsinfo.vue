@@ -1,5 +1,8 @@
 <template>
     <div class="goodsinfo-container">
+        <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
+            <div class='ball' v-show="ballFlag" ref="ball"></div>
+        </transition>
             <!-- 轮播图区域 -->
             <div class="mui-card">
 				<div class="mui-card-content">
@@ -18,11 +21,11 @@
                         </p>
                         <p>
                             购买数量：
-                            <numberbox></numberbox>
+                            <numberbox @getcount="getcount" :max="goodsinfo.stock_quantity"></numberbox>
                         </p>
                         <p>
                             <mt-button type='primary' size='small'>立即购买</mt-button>
-                            <mt-button type='danger' size='small'>加入购物车</mt-button>
+                            <mt-button type='danger' size='small' @click="addToShopCar">加入购物车</mt-button>
                         </p>
 					</div>
 				</div>
@@ -54,7 +57,9 @@ export default {
             banners:[],
             id:this.$route.params.id,
             isfull:false,
-            goodsinfo:[]
+            goodsinfo:[],
+            ballFlag:false,
+            count:1
         }
     },
     methods:{
@@ -86,11 +91,34 @@ export default {
         },
         goComment(id){
             this.$router.push({path:`/home/goodsinfo/goodsComment/${id}`});
+        },
+        addToShopCar(){
+            this.ballFlag=!this.ballFlag;
+        },
+        beforeEnter(el){
+            el.style.transform="translate(0,0)";
+        },
+        enter(el,done){
+            el.offsetWidth;
+            const ballposition=this.$refs.ball.getBoundingClientRect();
+            const badgeposition=document.getElementById("badge").getBoundingClientRect();
+            const moveLeft=badgeposition.left-ballposition.left;
+            const moveTop=badgeposition.top-ballposition.top;
+            el.style.transform=`translate(${moveLeft}px,${moveTop}px)`;
+            el.style.transition="all .3s ease-in";
+            done();
+        },
+        afterEnter(el){
+            this.ballFlag=!this.ballFlag;
+        },
+        getcount(count){
+            this.count=count;
         }
+
     },
     mounted(){
         this.getbanners();
-        this.goods_getinfo()
+        this.goods_getinfo();
     },
       components:{
         swiper,
@@ -102,6 +130,16 @@ export default {
     .goodsinfo-container{
         background: #eee;
         overflow: hidden;
+        .ball{
+            width:15px;
+            height: 15px;
+            border-radius:50%;
+            background-color: red;
+            position: absolute;
+            z-index: 99;
+            top:392px;
+            left:152px;
+        }
     }
     .price{
         .now_price{
