@@ -94,6 +94,15 @@ export default {
         },
         addToShopCar(){
             this.ballFlag=!this.ballFlag;
+            // this.$store.state.catecount= this.$store.state.catecount+this.count;
+            //   this.$store.commit("changeCount",this.count);
+            var goodsinfo={
+                id:this.id,
+                count:this.count,
+                price:this.goodsinfo.sell_price,
+                selected:true
+            };
+            this.$store.commit("addToCar",goodsinfo);
         },
         beforeEnter(el){
             el.style.transform="translate(0,0)";

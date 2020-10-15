@@ -21,7 +21,6 @@ export default {
     },
     mounted(){
         mui(".mui-numbox").numbox();
-        console.log(this.max);
     },
     watch: {
         max:function(newV,oldV){
